@@ -6,7 +6,7 @@
 #include <algorithm>
 using namespace std;
 
-const char * fillwithspace(string *str,const int &len){
+const char * fillwithspace(string *str,const int &len){//fill with space to Align the SQL format 
 	static char cStr[2048];
 	*str = string("\'")+(*str)+string("\',");
 	while(len != str->length()){
@@ -24,12 +24,12 @@ string Trim(string& str)
 
 int main()  
 {
-	int num = 0;
-	vector<string> vTable;
-	vector<string> vTable2;
-	int pos;
-	int pos2;
-    ifstream fin("kamm.csv"); //打开文件流操作
+    int num = 0;
+    vector<string> vTable;
+    vector<string> vTable2;
+    int pos;
+    int pos2;
+    ifstream fin("kamm.csv"); 
     string line;   
     while (getline(fin, line))   //整行读取，换行符“\n”区分，遇到文件尾标志eof终止读取  
     {   
@@ -37,12 +37,11 @@ int main()
         vector<string> fields; //声明一个字符串向量 
 		
         string field;  
-        while (getline(sin, field, ',')) //将字符串流sin中的字符读入到field字符串中，以逗号为分隔符  
+        while (getline(sin, field, ',')) //以逗号为分隔符
         {  
-            fields.push_back(field); //将刚刚读取的字符串添加到向量fields中
+            fields.push_back(field); 
         }  
-        string name = Trim(fields[0]); //清除掉向量fields中第一个元素的无效字符，并赋值给变量name  
-        string tablename = Trim(fields[1]); //清除掉向量fields中第二个元素的无效字符，并赋值给变量age   
+        string tablename = Trim(fields[1]); //这里是因为我csv中的格式固定的，所以直接写死fields[1]
 		vTable.push_back(tablename);
         cout <<num++<<"-------->"<<"tablename--->"<< tablename << "\t"<<endl;   
     }
@@ -50,7 +49,7 @@ int main()
 
 	num = 0;
 	ifstream fin2("init_memcachetable.sql");
-	ofstream out("init_memcachetable.sql",ios::app);
+	ofstream out("init_memcachetable.sql",ios::app);//ios::app续写
 	string line2;
 	while (getline(fin2,line2)){
 		string str(line2);
